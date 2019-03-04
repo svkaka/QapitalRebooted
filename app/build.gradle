@@ -1,0 +1,93 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    def properties = rootProject.ext
+    compileSdkVersion properties.androidCompileSdk
+
+    defaultConfig {
+        minSdkVersion properties.androidMinSdk
+        targetSdkVersion properties.androidTargetSdk
+        versionCode properties.appVersionCode
+        versionName properties.appVersionName
+        applicationId "com.ovrbach.qapitalchallengerebooted"
+        testInstrumentationRunner "com.ovrbach.qapitalchallengerebooted.test.TestRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    useLibrary 'android.test.runner'
+
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(":presentation")
+    implementation project(":remote")
+    implementation project(':local')
+    implementation project(':domain')
+
+    def daggerDependencies = rootProject.ext.daggerDependencies
+    implementation daggerDependencies.daggerSupport
+    implementation daggerDependencies.dagger2
+    kapt daggerDependencies.dagger2Processor
+    kapt daggerDependencies.daggerCompiler
+
+    def localGeneratorDependencies = rootProject.ext.localGeneratorDependencies
+    kapt localGeneratorDependencies.roomCompiler
+
+    def testDependencies = rootProject.ext.domainTestDependencies
+    def coreTestingDependencies = rootProject.ext.coreTestingDependencies
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.kotlinJunit
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.assertJ
+    testImplementation coreTestingDependencies.androidTestCore
+
+    androidTestImplementation coreTestingDependencies.mockitoAndroid
+    androidTestImplementation coreTestingDependencies.androidTestCore
+    androidTestImplementation coreTestingDependencies.androidArchTest
+    androidTestImplementation coreTestingDependencies.androidRunner
+    androidTestImplementation coreTestingDependencies.androidJunitRunner
+    androidTestImplementation coreTestingDependencies.androidRules
+
+    kaptAndroidTest daggerDependencies.daggerCompiler
+    kaptAndroidTest daggerDependencies.dagger2Processor
+
+
+    def appDependencies = rootProject.ext.appDependencies
+    implementation appDependencies.rxAndroid
+    implementation appDependencies.androidXCore
+    implementation appDependencies.androidXCompat
+    implementation appDependencies.constraintLayout
+    implementation appDependencies.cardView
+    implementation appDependencies.recyclerView
+    implementation appDependencies.material
+    implementation appDependencies.glide
+    kapt appDependencies.glideProcessor
+
+
+    def espressoDependencies = rootProject.ext.espressoDependencies
+    androidTestImplementation espressoDependencies.espressoCore
+    androidTestImplementation espressoDependencies.espressoContrib
+
+}

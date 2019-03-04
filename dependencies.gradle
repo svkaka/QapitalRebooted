@@ -1,0 +1,126 @@
+ext {
+
+    androidCompileSdk = 28
+    androidMinSdk = 21
+    androidTargetSdk = 28
+    androidBuildTools = "28.0.0"
+    appVersionCode = 1
+    appVersionName = "1.0"
+
+    kotlinVersion = '1.3.20'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    rxKotlinVersion = '2.3.0'
+
+    jUnitVersion = "4.12"
+    mockitoKotlinVersion = '2.0.0'
+    assertJVersion = '3.12.0'
+
+    domainDependencies = [
+            kotlin         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            javaxAnnotation: "javax.annotation:jsr250-api:$javaxAnnotationVersion",
+            javaInject     : "javax.inject:javax.inject:$javaxInjectVersion",
+            rxKotlin       : "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
+    ]
+    domainTestDependencies = [
+            junit      : "junit:junit:$jUnitVersion",
+            mockito    : "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion",
+            assertJ    : "org.assertj:assertj-core:$assertJVersion",
+            kotlinJunit: "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
+    ]
+
+
+    moshiKotlinVersion = '1.8.0'
+    okHttpVersion = '3.13.1'
+    retrofitVersion = '2.5.0'
+
+    mockServerVersion = '3.13.1'
+
+    remoteDependencies = [
+            moshiKotlin   : "com.squareup.moshi:moshi-kotlin:$moshiKotlinVersion",
+            okHttp        : "com.squareup.okhttp3:okhttp:$okHttpVersion",
+            okHttpLogger  : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            retrofit      : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitMoshi : "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
+            retrofitRxJava: "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+    ]
+
+    remoteGeneratorDependencies = [
+            moshiCodeGen: "com.squareup.moshi:moshi-kotlin-codegen:$moshiKotlinVersion"
+    ]
+
+    remoteTestDependencies = [
+            mockServer: "com.squareup.okhttp3:mockwebserver:$mockServerVersion",
+    ]
+
+
+    roomVersion = "2.1.0-alpha04"
+    localDependencies = [
+            room  : "androidx.room:room-runtime:$roomVersion",
+            roomRx: "androidx.room:room-rxjava2:$roomVersion"
+    ]
+
+    localGeneratorDependencies = [
+            roomCompiler: "androidx.room:room-compiler:$roomVersion"
+    ]
+
+    localTestDependencies = [
+            roomTesting: "androidx.room:room-testing:$roomVersion"
+    ]
+
+    //core test dependencies shared for android modules
+    androidTestCoreVersion = "1.0.0"
+    androidRunnerVersion = "1.1.2-alpha01"
+    androidJunitRunnerVersion = "1.1.0"
+    androidArchTestVersion = "2.0.0-rc01"
+    mockitoAndroidVersion = "2.24.5"
+
+    coreTestingDependencies = [
+            androidTestCore   : "androidx.test:core:$androidTestCoreVersion",
+            androidRunner     : "androidx.test:runner:$androidRunnerVersion",
+            androidArchTest   : "androidx.arch.core:core-testing:$androidArchTestVersion",
+            androidJunitRunner: "androidx.test.ext:junit:$androidJunitRunnerVersion",
+            mockitoAndroid    : "org.mockito:mockito-android:$mockitoAndroidVersion",
+            androidRules      : "androidx.test:rules:$androidJunitRunnerVersion"
+    ]
+
+    aacLifecycleVersion = "2.0.0"
+    presentationDependencies = [
+            aacLifecycle: "androidx.lifecycle:lifecycle-extensions:$aacLifecycleVersion",
+    ]
+
+    dagger2Version = "2.21"
+    daggerDependencies = [
+            dagger2         : "com.google.dagger:dagger-android:$dagger2Version",
+            daggerSupport   : "com.google.dagger:dagger-android-support:$dagger2Version",
+            dagger2Processor: "com.google.dagger:dagger-android-processor:$dagger2Version",
+            daggerCompiler  : "com.google.dagger:dagger-compiler:$dagger2Version"
+    ]
+
+    espressoVersion = "3.1.1"
+    espressoDependencies = [
+            espressoCore   : "androidx.test.espresso:espresso-core:$espressoVersion",
+            espressoContrib: "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    ]
+
+    rxAndroidVersion = "2.1.1"
+    androidXCoreVersion = "1.1.0-alpha04"
+    androidXCompatVersion = "1.1.0-alpha02"
+    constraintLayoutVersion = "2.0.0-alpha3"
+    androidDesignVersion = "1.0.0"
+    glideVersion = "4.9.0"
+    appDependencies = [
+            rxAndroid       : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
+            androidXCore    : "androidx.core:core-ktx:$androidXCoreVersion",
+            androidXCompat  : "androidx.appcompat:appcompat:$androidXCompatVersion",
+            constraintLayout: "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+
+            cardView        : "androidx.cardview:cardview:$androidDesignVersion",
+            recyclerView    : "androidx.recyclerview:recyclerview:$androidDesignVersion",
+            material        : "com.google.android.material:material:$androidDesignVersion",
+
+            glide           : "com.github.bumptech.glide:glide:$glideVersion",
+            glideProcessor  : "com.github.bumptech.glide:compiler:$glideVersion"
+    ]
+
+}

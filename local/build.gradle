@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    def properties = rootProject.ext
+    compileSdkVersion properties.androidCompileSdk
+
+    defaultConfig {
+        minSdkVersion properties.androidMinSdk
+        targetSdkVersion properties.androidTargetSdk
+        versionCode properties.appVersionCode
+        versionName properties.appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api project(":data")
+
+    def localDependencies = rootProject.ext.localDependencies
+    def localGeneratorDependencies = rootProject.ext.localGeneratorDependencies
+    def localTestDependencies = rootProject.ext.localTestDependencies
+    def coreTestingDependencies = rootProject.ext.coreTestingDependencies
+    def testDependencies = rootProject.ext.domainTestDependencies
+    def daggerDependencies = rootProject.ext.daggerDependencies
+
+    kapt daggerDependencies.daggerCompiler
+    kapt daggerDependencies.dagger2Processor
+
+    api localDependencies.room
+    implementation localDependencies.roomRx
+    kapt localGeneratorDependencies.roomCompiler
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.assertJ
+    testImplementation testDependencies.kotlinJunit
+    testImplementation coreTestingDependencies.androidTestCore
+
+    androidTestImplementation localTestDependencies.roomTesting
+    androidTestImplementation coreTestingDependencies.androidArchTest
+    androidTestImplementation coreTestingDependencies.androidRunner
+    androidTestImplementation coreTestingDependencies.androidJunitRunner
+
+    //todo move to dependencies
+   // androidTestUtil 'androidx.test:orchestrator:1.1.0'
+}

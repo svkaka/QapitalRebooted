@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    def properties = rootProject.ext
+    compileSdkVersion properties.androidCompileSdk
+
+    defaultConfig {
+        minSdkVersion properties.androidMinSdk
+        targetSdkVersion properties.androidTargetSdk
+        versionCode properties.appVersionCode
+        versionName properties.appVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api project(":domain")
+
+    def coreTestingDependencies = rootProject.ext.coreTestingDependencies
+    def testDependencies = rootProject.ext.domainTestDependencies
+    def presentation = rootProject.ext.presentationDependencies
+    def daggerDependencies = rootProject.ext.daggerDependencies
+
+    api presentation.aacLifecycle
+
+    kapt daggerDependencies.daggerCompiler
+    kapt daggerDependencies.dagger2Processor
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.assertJ
+    testImplementation testDependencies.kotlinJunit
+    testImplementation coreTestingDependencies.androidTestCore
+    testImplementation coreTestingDependencies.androidArchTest
+
+
+    androidTestImplementation coreTestingDependencies.mockitoAndroid
+    androidTestImplementation coreTestingDependencies.androidArchTest
+    androidTestImplementation coreTestingDependencies.androidRunner
+    androidTestImplementation coreTestingDependencies.androidJunitRunner
+
+
+}

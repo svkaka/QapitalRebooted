@@ -1,0 +1,35 @@
+package com.ovrbach.qapitalchallengerebooted.domain.interactor
+
+import com.ovrbach.qapitalchallengerebooted.domain.executor.PostExecutionThread
+import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
+
+abstract class CompletableUseCase<Params> constructor(
+    val postExecutionThread: PostExecutionThread
+) {
+
+    private val disposables = CompositeDisposable()
+
+    abstract fun buildUserCase(params: Params? = null): Completable
+
+    open fun execute(observer: DisposableCompletableObserver, params: Params? = null) {
+        val completable = buildUserCase(params)
+            .subscribeOn(Schedulers.io())
+            .observeOn(postExecutionThread.scheduler)
+
+        addDisposable(completable.subscribeWith(observer))
+    }
+
+    private fun addDisposable(disposable: Disposable) {
+        disposables.add(disposable)
+    }
+
+    fun dispose() {
+        disposables.dispose()
+    }
+}
